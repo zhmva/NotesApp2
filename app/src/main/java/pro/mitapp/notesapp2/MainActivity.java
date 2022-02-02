@@ -11,11 +11,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvNotes;
     private NotesAdapter adapter;
     private FloatingActionButton btnOpenAddActivity;
+    private List<NotesModel> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNotesRecycler() {
-        rvNotes = findViewById(R.id.rv_notes);
-        adapter = new NotesAdapter(this);
+        rvNotes = findViewById(R.id.rv_notes);;
         rvNotes.setAdapter(adapter);
+
+
+
     }
 
     @Override
@@ -48,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100){
             NotesModel model = new NotesModel(data.getStringExtra("title"), data.getStringExtra("description"), "");
             adapter.addNote(model);
+        }
+        if (data.getBooleanExtra("isUpdate", false)){
+            NotesModel model = new NotesModel(data.getStringExtra("title"), data.getStringExtra("description"), "");
         }
     }
 }
